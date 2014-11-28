@@ -32,9 +32,12 @@
 <h2>
 <a id="二级标题三级标题" class="anchor" href="#%E4%BA%8C%E7%BA%A7%E6%A0%87%E9%A2%98%E4%B8%89%E7%BA%A7%E6%A0%87%E9%A2%98" aria-hidden="true"><span class="octicon octicon-link"></span></a>二级标题<a href="baidu.com">三级标题</a>
 </h2>
-
-<h3>
-<a id="三级" class="anchor" href="#%E4%B8%89%E7%BA%A7" aria-hidden="true"><span class="octicon octicon-link"></span></a>三级</h3>
+<p>My post list:</p>
+<ul>
+   {% for post in site.posts %}
+       <li><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
+   {% endfor %}
+</ul>
 
 <p>这是我的第一个博客，然后试试效果啦。嘿嘿
 考研中，不会怎么更。</p>
