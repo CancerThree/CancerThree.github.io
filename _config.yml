@@ -1,5 +1,5 @@
-title:            Cancer Three
-description:      Cancer is a constellation's name.哈哈哈
+title:            Orange
+description:      They call me orange juice.
 # put your disqus here
 #disqus_shortname: 
 comments:         false
@@ -42,10 +42,10 @@ menu:
 #        url: '/intro/sample-post/'
 
 # Owner/author information
-#owner:
-  name:           Your name
+owner:
+  name:           Orange
 #  site:           http://aronbordin.com
-#  avatar:         images/avatar.jpg
+  avatar:         images/me.jpg
 #  bio:            "Your bio goes here. It shouldn't be super long but a good two sentences or two should suffice."
 #  email:          you@email.com
   # Twitter nick for use in Twitter cards and follow button.
