@@ -110,3 +110,74 @@ for (auto ite : v)
 for (auto b = v.begin(), e = v.end(); b != e; b++)
 	std::cout << *b._Ptr << std::endl;
 {% endhighlight %}
+
+#### C++的lamda表达式
+
+C++ 11中加入了lamda表达式，在一定程度上，使用lamda表达式可以简化程序，使得代码更加清晰。可以理解为一个匿名函数。lamda表达式形式如下：
+
+> [captureList](parameterList)mutable->returnType {statement}
+
+1. captureList: 捕捉列表。捕捉列表能够捕捉上下文中的变量以供Lamda函数使用。
+
+2. parameterList: 与普通函数相同，若不需要参数，可以省略。
+
+3. mutable: 修饰符。默认情况下，Lamda函数是const函数，使用mutable修饰的化，可以取消其常量性，其函数代码改变被捕获的值。使用该修饰符时，参数列表不可省略。
+
+4. returnType: 返回类型。在不需要返回值时可以与'->'一起省略。
+
+5. statement: 和普通函数一样，只是多了可以使用捕获的变量。
+
+Lamda的捕捉列表可以有以下几种:
+
+> 1. [a] 表示以值传递的方式捕捉变量a;
+> 2. [=] 表示已值传递的方式捕捉所有父作用域的所有变量（包括this）;
+> 3. [&a] 表示以引用传递的方式捕捉变量a;
+> 4. [&] 表示以引用传递的方式捕捉所有父作用域的所有变量（包括this）。
+
+捕捉列表可以组合使用，但是在组合使用的时候，不允许重复捕捉，比如说：
+> [=, a] 这里已经用值传递的方式捕捉了所有变量，不允许再使用值传递来捕捉a了。
+
+##### eg1. mutable关键字
+
+{% highlight cpp %}
+	int testVal = 1;
+
+	[=] {testVal++; };  //编译会报错，testVal不可改变的
+
+	[=]()mutable->void{testVal++; };    //编译正确，可以使用testVal值
+{% endhighlight %}
+
+##### eg2.值捕捉与引用捕捉
+
+{% highlight cpp %}
+	int testVal = 1;
+
+	[=]()mutable->void{testVal++; };    //在该Lamda表达内，testVal被改变为2
+    std::cout << testVal << std::endl;  //由于是值捕捉，父作用域中testVal=1
+
+	[&] {testVal++; };  //引用捕捉中，表达式内的改变可以影响父作用域
+    std::cout << testVal << std::endl;  //由于是引用捕捉，父作用域中testVal被改变，=2
+{% endhighlight %}
+
+##### eg3.Lamda对程序的简化
+看一个例子，比如在使用sort函数进行排序的时候，需要先定义一个排序的规则函数，然后再调用sort。但是可能这个规则函数只用一次。
+{% highlight cpp %}
+bool compare(int a, int b)
+{
+	return a > b;
+}
+
+//省略一下调用sort前的函数
+int testArr[]{1, 2, 3, 4, 5};
+
+std::sort(aatestArraa, testArr + 5, compare);
+{% endhighlight %}
+
+改成Lamda可以是这样：
+{% highlight cpp %}
+int testArr[]{1, 2, 3, 4, 5};
+
+std::sort(aatestArraa, testArr + 5, [](int a, int b)->bool {return a > b;});
+{% endhighlight %}
+
+直接简化了代码，并且少了一个函数的命名，减少了对命名空间的污染（才不是偷懒~）。
